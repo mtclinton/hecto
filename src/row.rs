@@ -11,7 +11,7 @@ impl From<&str> for Row {
         let mut row = Self {
             string: String::from(slice),
             len: 0,
-        }
+        };
         row.update_len();
         row
     }
