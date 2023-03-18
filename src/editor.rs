@@ -105,6 +105,13 @@ impl Editor {
                 self.document.insert(&self.cursor_position, c);
                 self.move_cursor(Key::Right);
             }
+            Key::Delete => self.document.delete(&self.cursor_position),
+            Key::Backspace => {
+                if self.cursor_position.x > 0 || self.cursor_position.y > 0 {
+                    self.move_cursor(Key::Left);
+                    self.document.delete(&self.cursor_position);
+                }
+            }
             Key::Up
             | Key::Down
             | Key::Left
@@ -253,7 +260,7 @@ impl Editor {
         Terminal::set_fg_color(STATUS_FG_COLOR);
         println!("{}\r", status);
         Terminal::reset_fg_color();
-        Terminal::reset_bg_color();;
+        Terminal::reset_bg_color();
     }
     fn draw_message_bar(&self) {
         Terminal::clear_current_line();  
